@@ -19,8 +19,9 @@
     "services:stop": "docker compose -f infra/compose.yaml stop",
     "services:down": "docker compose -f infra/compose.yaml down",
     "services:wait:database": " node infra/scripts/wait-for-postgres.js",
-    "lint:check": "prettier --check .",
-    "lint:fix": "prettier --write .",
+    "lint:prettier:check": "prettier --check .",
+    "lint:prettier:fix": "prettier --write .",
+    "lint:eslint:check": "next lint --dir .",
     "test": "npm run services:up && concurrently --names next,jest --hide next -k -s command-jest \"next dev\" \"jest --runInBand --verbose\"",
     "test:watch": "jest --watchAll --runInBand",
     "migration:create": "node-pg-migrate --migrations-dir infra/migrations create",
@@ -30,6 +31,10 @@
   "license": "MIT",
   "devDependencies": {
     "concurrently": "^9.1.2",
+    "eslint": "^9.18.0",
+    "eslint-config-next": "^15.1.5",
+    "eslint-config-prettier": "^10.0.1",
+    "eslint-plugin-jest": "^28.11.0",
     "jest": "^29.7.0",
     "prettier": "^3.4.2"
   }
