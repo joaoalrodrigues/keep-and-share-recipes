@@ -1,6 +1,17 @@
 import database from "infra/database";
+import { onErrorHandler, onNoMatchHandler } from "infra/middlewares";
+import { createRouter } from "next-connect";
 
-export default async function status(request, response) {
+const router = createRouter();
+
+router.get(getHandler);
+
+export default router.handler({
+  onNoMatch: onNoMatchHandler,
+  onError: onErrorHandler,
+});
+
+async function getHandler(_, response) {
   const updatedAt = new Date().toISOString();
 
   const [databaseVersionResult, databaseMaxConnectionsResult] =
