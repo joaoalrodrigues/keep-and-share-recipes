@@ -69,7 +69,7 @@ describe("PATCH /api/v1/users", () => {
     });
 
     test("With duplicated email", async () => {
-      const user1 = await orchestrator.createUser({
+      await orchestrator.createUser({
         username: "duplicatedEmail1",
         email: "duplicatedEmail1@gmail.com",
         password: "weakpassword123",

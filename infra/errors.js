@@ -77,10 +77,13 @@ export class ValidationError extends Error {
 }
 
 export class NotFoundError extends Error {
-  constructor(message) {
+  constructor({ cause, message, action }) {
+    super(message || "Resource not found.", {
+      cause,
+    });
+
     this.name = "NotFoundError";
-    this.message = message;
-    this.action = "Verify if you are passing a valid id.";
+    this.action = action || "Verify if you are passing a valid parameter.";
     this.statusCode = 404;
   }
 
