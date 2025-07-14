@@ -55,3 +55,44 @@ export class MethodNotAllowedError extends Error {
     };
   }
 }
+
+export class ValidationError extends Error {
+  constructor({ cause, action, message }) {
+    super(message || "A validation error has ocurred.", {
+      cause,
+    });
+    this.name = "ValidationError";
+    this.action = action || "Provide valid data and try again.";
+    this.statusCode = 400;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
+export class NotFoundError extends Error {
+  constructor({ cause, message, action }) {
+    super(message || "Resource not found.", {
+      cause,
+    });
+
+    this.name = "NotFoundError";
+    this.action = action || "Verify if you are passing a valid parameter.";
+    this.statusCode = 404;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
