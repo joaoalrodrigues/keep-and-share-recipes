@@ -76,6 +76,26 @@ export class ValidationError extends Error {
   }
 }
 
+export class UnauthorizedError extends Error {
+  constructor({ cause, action, message }) {
+    super(message || "User not authenticated.", {
+      cause,
+    });
+    this.name = "UnauthorizedError";
+    this.action = action || "Login to continue.";
+    this.statusCode = 401;
+  }
+
+  toJSON() {
+    return {
+      name: this.name,
+      message: this.message,
+      action: this.action,
+      status_code: this.statusCode,
+    };
+  }
+}
+
 export class NotFoundError extends Error {
   constructor({ cause, message, action }) {
     super(message || "Resource not found.", {
