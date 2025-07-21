@@ -3,6 +3,7 @@ import {
   MethodNotAllowedError,
   NotFoundError,
   ValidationError,
+  UnauthorizedError,
 } from "./errors";
 
 function onNoMatchHandler(_, response) {
@@ -11,7 +12,11 @@ function onNoMatchHandler(_, response) {
 }
 
 function onErrorHandler(error, _, response) {
-  if (error instanceof ValidationError || error instanceof NotFoundError) {
+  if (
+    error instanceof ValidationError ||
+    error instanceof NotFoundError ||
+    error instanceof UnauthorizedError
+  ) {
     console.error(error.name);
     console.error(error.message);
     return response.status(error.statusCode).json(error);
