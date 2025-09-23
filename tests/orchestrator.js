@@ -3,6 +3,7 @@ import { faker } from "@faker-js/faker";
 import database from "infra/database";
 import migrator from "models/migrator";
 import user from "models/user";
+import item from "models/item";
 
 async function waitForAllServices() {
   await waitForWebServer();
@@ -41,11 +42,25 @@ async function createUser(userInputData) {
   return createdUser;
 }
 
+async function createItem(itemInputData) {
+  const createdItem = await item.create({
+    name: itemInputData?.name || faker.food.dish(),
+    type:
+      itemInputData?.type || faker.helpers.arrayElement(["input", "product"]),
+    baseUnit:
+      itemInputData?.baseUnit ||
+      faker.helpers.arrayElement(["kg", "g", "l", "ml", "unit"]),
+  });
+
+  return createdItem;
+}
+
 const orchestrator = {
   waitForAllServices,
   cleanDatabase,
   runPendingMigrations,
   createUser,
+  createItem,
 };
 
 export default orchestrator;
